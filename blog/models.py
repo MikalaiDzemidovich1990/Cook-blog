@@ -28,6 +28,19 @@ class Post(models.Model):
     tag=models.ManyToManyField(Tag, related_name="post")
     create_at=models.DateTimeField(auto_now_add=True)
 
+class Recipe(models.Model):
+    name=models.CharField(max_length=100)
+    serves=models.CharField(max_length=50)
+    prep_time=models.PositiveIntegerField(default=0)
+    cook_time=models.PositiveIntegerField(default=0)
+    ingredients=models.TextField()
+    direction=models.TextField()
+    post=models.ForeignKey(Post, related_name="recipe", on_delete=models.SET_NULL, null=True, blank=True)
 
-
+class Comment(models.Model):
+    name=models.CharField(max_length=50)
+    email=models.CharField(max_length=100)
+    website=models.CharField(max_length=150)
+    message=models.TextField(max_length=500)
+    post=models.ForeignKey(Post, related_name="comment", on_delete=models.CASCADE)
 # Create your models here.
